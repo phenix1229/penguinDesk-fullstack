@@ -5,7 +5,8 @@ const UserSchema = new mongoose.Schema({
     email:{type:String, unique:true, lowercase:true, required:true},
     password:{type:String, required:true},
     name:{type:String, default:''},
-    group:{type:String, default:''}
+    group:{type:String, default:''},
+    tickets:{type:Array}
 });
 
 UserSchema.pre('save', function(next){
