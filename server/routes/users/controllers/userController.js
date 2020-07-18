@@ -1,45 +1,76 @@
 const User = require('../models/User');
-const { validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 
 module.exports = {
-    //register new user
-    register: (req, res, next) => {
+    //register user
+    register:
+    // [
+    //     check('name', 'Name is required')
+    //         .not()
+    //         .isEmpty(),
+    //     check('email', 'Email is required')
+    //         .isEmail(),
+    //     check('password', 'Please enter a password with 6 or more characters')
+    //         .isLength({min: 6})
+    // ],
+    async (req, res) => {
+
         const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.json({ error: errors.array() });
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
         }
-        const { name, email, password } = req.body;
-        User.findOne({ email }).then(user => {
-            if (user) {
-                return res.json({message:'User exists'});
-            } else {
-                const newUser = new User();
-                newUser.name = name;
-                newUser.email = email;
-                newUser.password = password;
-                newUser
-                .save()
-                .then(user => {
-                    req.login(user, err => {
-                        if (err) {
-                            return res
-                            .status(400)
-                            .json({ confirmation: false, message: err });
-                        } else {
-                            res.json(user);
-                        }
-                    });
-                })
-                .catch(err => {
-                    return next(err);
-                });
+        const {name, email, password, group, isAdmin} = req.body;
+
+        try {
+            let user = await User.findOne({email});
+            if(user){
+                return res.status(400).json({msg:'User already exists'});
+            };
+            user = new User({
+                name,
+                email,
+                password,
+                group,
+                isAdmin
+            });
+
+            const salt = await bcrypt.genSalt(10);
+
+            user.password = await bcrypt.hash(password, salt);
+
+            await user.save()
+            //     .then(user => {
+            //         library = new Library();
+            //         library.owner = user.id;
+            //         library.save();
+            //         user.library = library.id;
+            //         user.save();
+            //         return user;
+            //     })
+
+            const payload = {
+                user: {
+                    id: user.id
+                }
             }
-        })
-        .catch(err => reject(err));
+
+            jwt.sign(payload,process.env.JWT_SECRET, {
+                expiresIn:360000
+            }, (err, token) => {
+                if(err) throw err;
+                res.json({token})
+            } )
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('server error');
+        }
     },
 
+    //login user
     login: (req, res) => {
         User.findOne({email:req.body.email})
         .then((user) => {

@@ -1,12 +1,12 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+// const session = require('express-session');
+// const MongoStore = require('connect-mongo')(session);
 const usersRouter = require('./routes/users/userRoutes');
 require('dotenv').config();
 
@@ -29,28 +29,28 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  resave:true,
-  saveUninitialized:true,
-  secret:process.env.SESSION_SECRET,
-  store: new MongoStore({
-    url:process.env.MONGODB_URI,
-    autoReconnect:true,
-    cookie: {maxAge: 60000}
-  })
-}));
+// app.use(session({
+//   resave:true,
+//   saveUninitialized:true,
+//   secret:process.env.SESSION_SECRET,
+//   store: new MongoStore({
+//     url:process.env.MONGODB_URI,
+//     autoReconnect:true,
+//     cookie: {maxAge: 60000}
+//   })
+// }));
 
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 })
 
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 
-app.use('/', ticketRouter);
+app.use('/api/auth', ticketRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
