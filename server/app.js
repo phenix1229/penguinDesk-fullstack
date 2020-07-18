@@ -5,9 +5,10 @@ const logger = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const usersRouter = require('./routes/users/userRoutes');
+const authRouter = require('./routes/auth/authRoutes');
+const ticketRouter = require('./routes/tickets/ticketRoutes');
 require('dotenv').config();
 
-const ticketRouter = require('./routes/tickets/ticket');
 
 const app = express();
 mongoose
@@ -18,9 +19,6 @@ mongoose
   })
   .then(() => console.log('MongoDB Connected'))
   .catch((err) => console.log(`MongoDB Error: ${err}`));
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 app.use(cors());
 app.use(logger('dev'));
@@ -30,8 +28,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/tickets', ticketRouter);
 
-app.use('/api/auth', ticketRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -6,9 +6,6 @@ const userValidation = require('./utils/userValidation');
 //register new user
 router.post('/register', userValidation, userController.register);
 
-//login user
-router.post('/login', userController.login);
-
 //logout user
 router.get('/logout', userController.logout);
 
