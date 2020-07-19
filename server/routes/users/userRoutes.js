@@ -4,7 +4,7 @@ const userController = require('./controllers/userController');
 const userValidation = require('./utils/userValidation');
 
 //register new user
-router.post('/register', userValidation, userController.register);
+router.post('/', userValidation, userController.register);
 
 //logout user
 router.get('/logout', userController.logout);
