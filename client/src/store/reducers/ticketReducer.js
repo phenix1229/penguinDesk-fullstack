@@ -1,0 +1,8 @@
+openTickets: false,
+            closedTickets: false,
+            createTicket: false,
+            updateTicket: false,
+            searchTerm: '',
+            tickets: [],
+            ticket: {},
+            ticketCounts: [],
