@@ -8,7 +8,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  GET_GROUPS
 } from './types';
 
 
@@ -23,6 +24,24 @@ import {
 
       dispatch({
         type: USER_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
+  
+  // Get Groups
+  export const getGroups = () => async dispatch => {
+    if(localStorage.token){
+      setAuthToken(localStorage.token);
+    }
+
+    try {
+      const res = await axios.get('/api/auth/groups');
+
+      dispatch({
+        type: GET_GROUPS,
         payload: res.data
       });
     } catch (err) {

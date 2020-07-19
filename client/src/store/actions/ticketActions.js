@@ -1,57 +1,98 @@
-countTickets = () => {
-    axios.get('/tickets').then((tickets) => {
-        let openTickets = 0;
-        let closedTickets = 0;
-        tickets.data.forEach((item) => {
-            if(item.open === true){
-                openTickets++
-            } else {
-                closedTickets++
-            }
-        });
-        const result = [openTickets, closedTickets];
-        this.setState({ticketCounts: result});
-    })
-};
-loadOpenTickets = () => {
-    axios.get('/tickets').then((tickets) => {
-        const openTickets = tickets.data.filter((item) => {
-            return item.open === true
+import axios from 'axios';
+import {
+    COUNT_TICKETS,
+    LOAD_OPEN_TICKETS,
+    LOAD_CLOSED_TICKETS,
+    LOAD_TICKET,
+    CLOSE_TICKET,
+    UPDATE_TICKET
+
+} from './types';
+
+export const countTickets = () => async dispatch => {
+    try {
+        await axios.get('/tickets').then((tickets) => {
+            let openTickets = 0;
+            let closedTickets = 0;
+            tickets.data.forEach((item) => {
+                if(item.open === true){
+                    openTickets++
+                } else {
+                    closedTickets++
+                }
+            });
+            const result = [openTickets, closedTickets];
+
+            dispatch ({
+                type: COUNT_TICKETS,
+                payload: result
+            })
         })
-        this.setState({tickets: openTickets, openTickets:true, closedTickets:false, createTicket:false, updateTicket:false, closeTicket:false, dashboard:false, ticket:{}})
-    })
+    } catch (error) {
+        
+    }
 };
-loadClosedTickets = () => {
-    axios.get('/tickets').then((tickets) => {
-        const closedTickets = tickets.data.filter((item) => {
-            return item.open === false
+
+export const loadOpenTickets = () => async dispatch =>{
+    try {
+        const res = await axios.get('/tickets').then((tickets) => {
+            const openTickets = tickets.data.filter((item) => {
+                return item.open === true
+            })
         })
-        this.setState({tickets: closedTickets, openTickets:false, closedTickets:true, createTicket:false, updateTicket:false, closeTicket:false, dashboard:false, ticket:{}})
-    })
-};
-loadTicket = (id) => {
-    axios.get(`/ticket/${id}`).then((ticket) => {
-        this.setState({
-            createTicket: false,
-            openTickets: false,
-            closedTickets: false,
-            dashboard:false,
-            ticket: ticket.data
+
+        dispatch ({
+            type: LOAD_OPEN_TICKETS,
+            payload: res
         })
+    } catch (error) {
+        
+    }
+    
+};
+
+export const loadClosedTickets = () => async dispatch => {
+    try {
+        const res = await axios.get('/tickets').then((tickets) => {
+            const closedTickets = tickets.data.filter((item) => {
+                return item.open === false
+            })
+        })
+
+        dispatch ({
+            type: LOAD_CLOSED_TICKETS,
+            payload: res
+        })
+    } catch (error) {
+        
+    }
+};
+
+export const loadTicket = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/ticket/${id}`);
+
+        dispatch ({
+            type: LOAD_TICKET,
+            payload: res.data
+        })
+    } catch (error) {
+        
+    }
+};
+
+export const closeTicket = (id) => async dispatch => {
+    dispatch ({
+        type: CLOSE_TICKET,
+        payload: id
     })
 };
-onDelete = (id) => {
-    axios.delete(`/ticket/${id}`).then(() => {
-        this.loadOpenTickets();
+
+export const updateTicket = (id) => async dispatch => {
+    dispatch ({
+        type: UPDATE_TICKET,
+        payload: id
     })
-};
-handleCloseTicket = (id) => {
-    this.loadTicket(id);
-    this.setState({updateTicket:false, closeTicket:true});
-};
-onUpdate = (id) => {
-    this.loadTicket(id);
-    this.setState({updateTicket:true, closeTicket:false});
 };
 handleChange = (event) => {
     this.setState({searchTerm:event.target.value}, ()=> {

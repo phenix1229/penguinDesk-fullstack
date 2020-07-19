@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
+import axios from 'axios';
 import {clearErrors, register} from '../../store/actions/authActions';
 import {setAlert} from '../../store/actions/alertActions';
+import {getGroups} from '../../store/actions/authActions';
+import Dropdown from '../layout/Dropdown';
 
 
-const Register = ({auth:{isAuthenticated, error}, props:{history}, register, clearErrors, setAlert}) => {
+const Register = ({auth:{isAuthenticated, error}, props:{history}, register, clearErrors, setAlert, getGroups}) => {
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,11 +25,12 @@ const Register = ({auth:{isAuthenticated, error}, props:{history}, register, cle
     const [user, setUser] = useState({
         name:'',
         email:'',
+        group:'',
         password:'',
         password2:''
     })
 
-    const {name, email, password, password2} = user;
+    const {name, email, group, password, password2} = user;
     
     const onChange = e => setUser({...user, [e.target.name]: e.target.value});
 
@@ -40,10 +44,13 @@ const Register = ({auth:{isAuthenticated, error}, props:{history}, register, cle
             register({
               name,
               email,
+              group,
               password
             });
           }
     }
+
+    const groups = getGroups();
 
     return (
         <div className="form-container">
@@ -59,9 +66,10 @@ const Register = ({auth:{isAuthenticated, error}, props:{history}, register, cle
                 <label htmlFor="email">Email Address</label>
                 <input type="email" name="email" value={email} onChange={onChange} />
             </div>
+            <Dropdown title={'Group'} options={groups} />
             <div className="form-group">
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password" value={password} onChange={onChange} />
+                <input type="password" name="password" id={password} onChange={onChange} />
             </div>
             <div className="form-group">
                 <label htmlFor="password2">Confirm Password</label>
@@ -79,4 +87,4 @@ const mapStateToProps = (state, ownProps) => ({
     props: ownProps
 })
 
-export default connect(mapStateToProps, {register, clearErrors, setAlert})(Register);
+export default connect(mapStateToProps, {register, clearErrors, setAlert, getGroups})(Register);
