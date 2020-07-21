@@ -71,11 +71,6 @@ import {
 
     try {
       const res = await axios.post('/api/auth/groups', name, config);
-
-      // dispatch({
-      //   type: ADD_GROUP,
-      //   payload: res.data
-      // });
     } catch (err) {
       dispatch({ type: AUTH_ERROR });
     }

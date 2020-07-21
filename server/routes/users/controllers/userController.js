@@ -1,4 +1,5 @@
 const User = require('../../../models/User');
+const Group = require('../../../models/Group');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
@@ -32,6 +33,11 @@ module.exports = {
             user.password = await bcrypt.hash(password, salt);
 
             await user.save();
+            await Group.findOne({name:group})
+            .then(group => {
+                group.members = [...group.members, email];
+                group.save();
+            })
 
             return res.json(user);
         } catch (err) {

@@ -41,6 +41,7 @@ const Register = ({auth:{isAuthenticated, error, groups}, props:{history}, regis
           } else if (password !== password2) {
             setAlert('Passwords do not match', 'danger');
           } else {
+            console.log(group)
             register({
               name,
               email,
@@ -52,8 +53,6 @@ const Register = ({auth:{isAuthenticated, error, groups}, props:{history}, regis
           setUser({
             name:'',
             email:'',
-            admin:false,
-            group:'',
             password:'',
             password2:''
           })
@@ -77,14 +76,14 @@ const Register = ({auth:{isAuthenticated, error, groups}, props:{history}, regis
             </div>
             <div className="form-group">
               <label>Admin:</label>
-              <select name='admin' id='admin'>
+              <select name='admin' id='admin' onChange={onChange}>
                 <option value="true">True</option>
                 <option value="false">False</option>
               </select>
             </div>
             <div className="form-group">
               <label>Group:</label>
-              <Dropdown title={'group'} options={[groups]} />
+              <Dropdown title={'group'} options={groups} onChange={onChange}/>
             </div>
             <div className="form-group">
                 <label htmlFor="password">Password</label>
