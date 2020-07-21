@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
+import Sidebar from '../layout/Sidebar';
+import Register from '../auth/Register';
 
 import {loadUser} from '../../store/actions/authActions';
 
 
-function Home({auth:{isAuthenticated}, props:{history}, loadUser}) {
+function Home({auth:{isAuthenticated, view}, props:{history}, loadUser}) {
     useEffect(() => {
         if (isAuthenticated) {
             loadUser();  
@@ -15,14 +17,14 @@ function Home({auth:{isAuthenticated}, props:{history}, loadUser}) {
     }, [isAuthenticated]);
 
         return (
-            <div className="grid-2">
-                <div>
-                    
+            <>
+                <div  id='sidebar'>
+                    <Sidebar />
                 </div>
-                <div>
-                    
+                <div id="main">
+                    {view === 'register' && <Register />}
                 </div>
-            </div>
+            </>
         )
 };
 

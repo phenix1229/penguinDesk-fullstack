@@ -9,7 +9,9 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
-  GET_GROUPS
+  GET_GROUPS,
+  GET_USERS,
+  SET_VIEW
 } from './types';
 
 
@@ -31,12 +33,22 @@ import {
     }
   };
   
+  // Get Users
+  export const getUsers = () => async dispatch => {
+    try {
+      const res = await axios.get('/api/auth/users');
+
+      dispatch({
+        type: GET_USERS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
+  
   // Get Groups
   export const getGroups = () => async dispatch => {
-    if(localStorage.token){
-      setAuthToken(localStorage.token);
-    }
-
     try {
       const res = await axios.get('/api/auth/groups');
 
@@ -97,6 +109,13 @@ import {
       });
     }
   };
+
+  export const setView = (view) => async dispatch => {
+    await dispatch({
+      type: SET_VIEW,
+      payload: view
+    })
+  }
 
   // Logout
   export const logout = () => async dispatch => {await dispatch ({ type: LOGOUT })};

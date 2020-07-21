@@ -13,7 +13,6 @@ const Navbar = ({ auth:{isAuthenticated, user}, logout, loadUser }) => {
 
   const onLogout = () => {
     logout();
-    // clearContacts();
   };
 
   const authLinks = (
@@ -31,9 +30,6 @@ const Navbar = ({ auth:{isAuthenticated, user}, logout, loadUser }) => {
   const guestLinks = (
     <Fragment>
       <li>
-        <Link to='/register'>Register</Link>
-      </li>
-      <li>
         <Link to='/login'>Login</Link>
       </li>
     </Fragment>
@@ -43,7 +39,7 @@ const Navbar = ({ auth:{isAuthenticated, user}, logout, loadUser }) => {
     <div className='navbar bg-primary'>
       <h1>
         <Link to='/'>
-          <img src='logoMain.png' id="logo" alt="" style={{width:"200px", margin:"none"}} />
+          <img src='logoMain.png' id="logo" alt="" style={{height:"40px", marginTop:"15px"}} />
         </Link>
       </h1>
       <ul>{isAuthenticated ? authLinks : guestLinks}</ul>

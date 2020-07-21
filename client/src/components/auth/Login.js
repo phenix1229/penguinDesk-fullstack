@@ -40,9 +40,9 @@ const Login = ({auth:{error, isAuthenticated}, props:{history}, login, clearErro
   };
 
   return (
-    <div className='form-container'>
+    <div className='form-container' id='login'>
       <h1>
-        Account <span className='text-primary'>Login</span>
+        <span className='text-primary'>Login</span>
       </h1>
       <form onSubmit={onSubmit}>
         <div className='form-group'>

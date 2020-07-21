@@ -6,7 +6,10 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    GET_GROUPS,
+    GET_USERS,
+    SET_VIEW
   } from '../actions/types';
 
   const initialState = {
@@ -14,7 +17,10 @@ import {
     isAuthenticated: false,
     loading: true,
     error: null,
-    user: null
+    user: null,
+    groups: null,
+    users: null,
+    view:null
 };
   
   export default (state = initialState, action) => {
@@ -26,6 +32,11 @@ import {
           loading: false,
           user: action.payload
         };
+      case GET_USERS:
+        return {
+          ...state,
+          users: action.payload
+        }
       case REGISTER_SUCCESS:
       case LOGIN_SUCCESS:
         localStorage.setItem('token', action.payload.token);
@@ -52,6 +63,18 @@ import {
         return {
           ...state,
           error: null
+        };
+      case GET_GROUPS:
+        return {
+          ...state,
+          groups: action.payload
+        };
+      case SET_VIEW:
+        localStorage.setItem('token', action.payload.token);
+        return {
+          ...state,
+          view: action.payload,
+          isAuthenticated: true
         };
       default:
         return state;

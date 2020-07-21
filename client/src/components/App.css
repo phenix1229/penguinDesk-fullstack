@@ -16,12 +16,48 @@
   padding: 0;
 }
 
+#app {
+  margin: 0px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+#sidebar {
+  grid-column: 1/2;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 50px 15px 0px 15px;
+  background-color: cornflowerblue;
+  color: rgb(107, 105, 105);
+  position: fixed;
+}
+
+#main {
+  grid-column: 2/9;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: auto;
+}
+
+#login {
+  grid-column: 4/6;
+  width: 100%;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   background-color: #fff;
   color: #333;
+}
+
+#registerForm {
+  margin-top: 50px;
+  width: 500px;
 }
 
 a {
@@ -324,7 +360,7 @@ button {
 }
 
 .form-group {
-  margin: 1.2rem 0;
+  max-width: 500px;
 }
 
 .form-group input {
@@ -364,7 +400,6 @@ table th {
   width: 100%;
   border-bottom: solid 1px var(--primary-color);
   opacity: 0.9;
-  margin-bottom: 1rem;
 }
 
 .navbar ul {

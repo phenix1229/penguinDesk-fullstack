@@ -18,6 +18,17 @@ module.exports = {
         }
     },
     
+    //get users
+    getUsers: async (req, res) => {
+        try {
+            const users = await User.find({}).select('-password');
+            res.status(200).json(users);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).json({msg:'server error'});
+        }
+    },
+    
     //get group
     getGroup: async (req, res) => {
         try {
@@ -48,8 +59,10 @@ module.exports = {
     //get groups
     getGroups: async (req, res) => {
         try {
-            const user = await Group.find({});
-            res.status(200).json(groups);
+            const groups = await Group.find({}).select('name').select('-_id');
+            const groupList = [];
+            groups.forEach(item => groupList.push(item.name))
+            res.status(200).json(groupList);
         } catch (err) {
             console.error(err.message);
             res.status(500).json({msg:'server error'});
@@ -58,7 +71,7 @@ module.exports = {
 
     //add group
     addGroup: async (req, res) => {
-        const {name} = req.body.name
+        const {name} = req.body
 
         try {
             let group = await Group.findOne({name});
@@ -69,6 +82,7 @@ module.exports = {
                 name
             });
             await group.save();
+            return res.json(group);
         } catch {
             
         }

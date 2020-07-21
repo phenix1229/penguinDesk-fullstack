@@ -6,11 +6,14 @@ const authController = require('./controllers/authController');
 //get user
 router.get('/', auth, authController.getUser);
 
+//get users
+router.get('/users', auth, authController.getUsers);
+
 //get groups
-router.get('/groups', auth, authController.getGroups);
+router.get('/groups', authController.getGroups);
 
 //get group
-router.get('/groups/:id', auth, authController.getGroups);
+router.get('/groups/:id', authController.getGroups);
 
 //login user
 router.post('/', authController.login);
