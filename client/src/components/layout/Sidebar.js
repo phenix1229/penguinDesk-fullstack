@@ -5,16 +5,24 @@ import Search from './Search';
 // import Dashboard from '../Dashboard';
 
 
-const Sidebar = ({setView}) => {
+const Sidebar = ({auth:{isAdmin}, setView}) => {
+    const adminButtons = (
+        <>
+            <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} onClick={() => setView('register')}>
+                        <h3>New User</h3>
+            </button>
+            <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} onClick={() => setView('newGroup')}>
+                        <h3>New Group</h3>
+            </button>
+        </>
+    )
 
 
         return (
             <>
                 <Search />
                 <br /> 
-                <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} onClick={() => setView('register')}>
-                    <h3>New User</h3>
-                </button>
+                {isAdmin && adminButtons}
                 <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >
                     <h3>New Ticket</h3>
                 </button>

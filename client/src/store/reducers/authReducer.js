@@ -20,7 +20,8 @@ import {
     user: null,
     groups: null,
     users: null,
-    view:null
+    view: null,
+    isAdmin: null
 };
   
   export default (state = initialState, action) => {
@@ -30,7 +31,8 @@ import {
           ...state,
           isAuthenticated: true,
           loading: false,
-          user: action.payload
+          user: action.payload,
+          isAdmin: action.payload.isAdmin
         };
       case GET_USERS:
         return {
