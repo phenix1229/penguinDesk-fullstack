@@ -21,8 +21,10 @@ module.exports = {
     //get users
     getUsers: async (req, res) => {
         try {
-            const users = await User.find({}).select('-password');
-            res.status(200).json(users);
+            const users = await User.find({}).select('email').select('-_id');
+            const userList = [];
+            users.forEach(item => userList.push(item.email))
+            res.status(200).json(userList);
         } catch (err) {
             console.error(err.message);
             res.status(500).json({msg:'server error'});

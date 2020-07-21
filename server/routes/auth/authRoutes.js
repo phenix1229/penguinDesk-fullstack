@@ -7,7 +7,7 @@ const authController = require('./controllers/authController');
 router.get('/', auth, authController.getUser);
 
 //get users
-router.get('/users', auth, authController.getUsers);
+router.get('/users', authController.getUsers);
 
 //get groups
 router.get('/groups', authController.getGroups);

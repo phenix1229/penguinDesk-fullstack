@@ -1,7 +1,7 @@
 import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
 import {
-  REGISTER_SUCCESS,
+  // REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
@@ -36,6 +36,7 @@ import {
   // Get Users
   export const getUsers = () => async dispatch => {
     try {
+      console.log('action')
       const res = await axios.get('/api/auth/users');
 
       dispatch({
@@ -43,7 +44,7 @@ import {
         payload: res.data
       });
     } catch (err) {
-      dispatch({ type: AUTH_ERROR });
+      // dispatch({ type: AUTH_ERROR });
     }
   };
   
@@ -70,7 +71,7 @@ import {
     };
 
     try {
-      const res = await axios.post('/api/auth/groups', name, config);
+      await axios.post('/api/auth/groups', name, config);
     } catch (err) {
       dispatch({ type: AUTH_ERROR });
     }
@@ -84,12 +85,7 @@ import {
       }
     };
     try {
-      const res = await axios.post('/api/users', formData, config);
-
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
-      });
+      await axios.post('/api/users', formData, config);
 
       loadUser();
     } catch (err) {

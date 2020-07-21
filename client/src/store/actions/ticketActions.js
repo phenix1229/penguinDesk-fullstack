@@ -33,17 +33,14 @@ export const countTickets = () => async dispatch => {
     }
 };
 
-export const loadOpenTickets = () => async dispatch =>{
+export const getTickets = () => async dispatch =>{
     try {
-        const res = await axios.get('/tickets').then((tickets) => {
-            const openTickets = tickets.data.filter((item) => {
-                return item.open === true
-            })
-        })
+        console.log('action')
+        const res = await axios.get('api/tickets')
 
         dispatch ({
             type: LOAD_OPEN_TICKETS,
-            payload: res
+            payload: res.data
         })
     } catch (error) {
         
@@ -81,71 +78,44 @@ export const loadTicket = (id) => async dispatch => {
     }
 };
 
-export const closeTicket = (id) => async dispatch => {
-    dispatch ({
-        type: CLOSE_TICKET,
-        payload: id
-    })
+export const newTicket = (ticket) => async dispatch => {
+
+    let axiosConfig = {
+        headers:{
+            'Content-Type':'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin':'*'
+        }
+    };
+    try {
+        axios.post('api/tickets', ticket, axiosConfig)
+            // this.countTickets();
+    } catch (error) {
+        
+    }
+    
 };
 
-export const updateTicket = (id) => async dispatch => {
-    dispatch ({
-        type: UPDATE_TICKET,
-        payload: id
-    })
-};
-handleChange = (event) => {
-    this.setState({searchTerm:event.target.value}, ()=> {
-    })
-};
-handleCreateTicketSubmit = (event,ticket) => {
-    event.preventDefault();
-    let axiosConfig = {
-        headers:{
-            'Content-Type':'application/json;charset=UTF-8',
-            'Access-Control-Allow-Origin':'*'
-        }
-    };
-    axios.post('/ticket', ticket, axiosConfig).then(() => {
-        this.setState({openTickets:true, closedTickets:false, updateTicket:false, createTicket:false, dashboard:false});
-        this.loadOpenTickets();
-        this.countTickets();
-    });
-};
-handleUpdateTicketSubmit = (event, ticket, id) => {
-    event.preventDefault();
+export const updateTicket = (ticket, id) => async dispatch => {
+
     console.log(ticket)
-    this.setState({
-        createTicket: false
-    });
+
     let axiosConfig = {
         headers:{
             'Content-Type':'application/json;charset=UTF-8',
             'Access-Control-Allow-Origin':'*'
         }
     };
-    axios.put(`/ticket/${id}`, ticket, axiosConfig).then(() => {
-        this.setState({openTickets:true, closedTickets:false, updateTicket:false, createTicket:false, closeTicket:false, dashboard:false, ticket:{}});
-        this.loadOpenTickets();
-    })
+    axios.put(`/ticket/${id}`, ticket, axiosConfig)
 };
-handleCloseTicketSubmit = (event, ticket, id) => {
-    event.preventDefault();
-    this.setState({
-        createTicket: false
-    });
+
+export const closeTicket = (ticket, id) => async dispatch => {
+
     let axiosConfig = {
         headers:{
             'Content-Type':'application/json;charset=UTF-8',
             'Access-Control-Allow-Origin':'*'
         }
     };
-    axios.put(`/ticket/${id}`, ticket, axiosConfig).then(() => {
-        this.setState({openTickets:false, closedTickets:true, updateTicket:false, createTicket:false, closeTicket:false, dashboard:false, ticket:{}});
-        this.loadClosedTickets();
-        this.countTickets();
-    })
-};
-handleCreateTicket = () => {
-    this.setState({createTicket:true, openTickets:false, updateTicket:false, closedTickets:false, closeTicket:false, dashboard:false, ticket:{}})
+    axios.put(`/ticket/${id}`, ticket, axiosConfig)
+        // this.countTickets();
 };

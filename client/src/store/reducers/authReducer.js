@@ -1,5 +1,4 @@
 import {
-    REGISTER_SUCCESS,
     REGISTER_FAIL,
     USER_LOADED,
     AUTH_ERROR,
@@ -39,7 +38,7 @@ import {
           ...state,
           users: action.payload
         }
-      case REGISTER_SUCCESS:
+      // case REGISTER_SUCCESS:
       case LOGIN_SUCCESS:
         localStorage.setItem('token', action.payload.token);
         return {
@@ -59,7 +58,10 @@ import {
           isAuthenticated: false,
           loading: false,
           user: null,
-          error: action.payload
+          error: action.payload,
+          view: null,
+          groups: null,
+          users: null
         };
       case CLEAR_ERRORS:
         return {

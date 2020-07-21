@@ -23,10 +23,10 @@ const Sidebar = ({auth:{isAdmin}, setView}) => {
                 <Search />
                 <br /> 
                 {isAdmin && adminButtons}
-                <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >
+                <button onClick={() => setView('newTicket')} className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >
                     <h3>New Ticket</h3>
                 </button>
-                <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >
+                <button onClick={() => setView('groupTickets')} className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >
                     <h3>Open Tickets</h3>
                 </button>
                 <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >

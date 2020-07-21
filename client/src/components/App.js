@@ -27,11 +27,9 @@ class App extends Component {
               <Alerts />
               <Switch>
                 <Route exact path = '/' component={Home} />
-
                 <Route exact path = '/login' component={Login} />
               </Switch>
             </div>
-            <Footer />
           </>
           </Router>
           </Provider>

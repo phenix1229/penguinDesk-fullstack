@@ -5,12 +5,9 @@ import {setAlert} from '../../store/actions/alertActions';
 import Dropdown from '../layout/Dropdown';
 
 
-const Register = ({auth:{isAuthenticated, error, groups}, props:{history}, register, clearErrors, setAlert, getGroups}) => {
+const Register = ({auth:{error, groups}, register, clearErrors, setAlert, getGroups}) => {
 
   useEffect(() => {
-    // if (isAuthenticated) {
-    //   history.push('/');
-    // }
 
     if (error === 'User already exists') {
       setAlert(error, 'danger');
@@ -18,7 +15,7 @@ const Register = ({auth:{isAuthenticated, error, groups}, props:{history}, regis
     }
     getGroups();
     // eslint-disable-next-line
-  }, [error, isAuthenticated, history, getGroups]
+  }, [error, getGroups]
   );
 
     const [user, setUser] = useState({
@@ -41,7 +38,6 @@ const Register = ({auth:{isAuthenticated, error, groups}, props:{history}, regis
           } else if (password !== password2) {
             setAlert('Passwords do not match', 'danger');
           } else {
-            console.log(group)
             register({
               name,
               email,
@@ -99,10 +95,9 @@ const Register = ({auth:{isAuthenticated, error, groups}, props:{history}, regis
         </div>
     )
 }
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
     auth: state.authReducer,
-    alert: state.alertReducer,
-    props: ownProps
+    alert: state.alertReducer
 })
 
 export default connect(mapStateToProps, {register, clearErrors, setAlert, getGroups})(Register);

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {clearErrors, addGroup} from '../../store/actions/authActions';
 import {setAlert} from '../../store/actions/alertActions';
-import Dropdown from '../layout/Dropdown';
 
 
 const AddGroup = ({auth:{error}, addGroup, clearErrors, setAlert}) => {

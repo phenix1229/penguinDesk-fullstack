@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const ticketController = require('./controllers/ticketController');
 
-router.post('/ticket', ticketController.creteTicket);
+router.post('/', ticketController.createTicket);
 
-router.get('/tickets', ticketController.getTickets);
+router.get('/', ticketController.getTickets);
 
-router.get('/ticket/:id', ticketController.getTicket);
+router.get('/:id', ticketController.getTicket);
 
-router.put('/ticket/:id', ticketController.updateTicket);
+router.put('/:id', ticketController.updateTicket);
 
 
 module.exports = router;

@@ -17,7 +17,6 @@ const TicketSchema = new mongoose.Schema({
   assignedTech:{type:String, default:''},
   comments:{type:Array, default:[]},
   resolution:{type:String},
-  open:{type:Boolean, default:true},
   closedBy:{type:String},
   closeDate:{type:String}
 });
