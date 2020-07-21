@@ -60,6 +60,26 @@ import {
       dispatch({ type: AUTH_ERROR });
     }
   };
+  
+  // Add Group
+  export const addGroup = (name) => async dispatch => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('/api/auth/groups', name, config);
+
+      // dispatch({
+      //   type: ADD_GROUP,
+      //   payload: res.data
+      // });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
 
   // Register User
   export const register = (formData) => async dispatch => {

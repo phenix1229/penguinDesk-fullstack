@@ -62,7 +62,7 @@ const Register = ({auth:{isAuthenticated, error, groups}, props:{history}, regis
     }
 
     return (
-        <div id="registerForm">
+        <div className="registerForm">
         <h1>
             <span className="text-primary">Add User</span>
         </h1>

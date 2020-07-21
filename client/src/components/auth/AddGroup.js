@@ -1,21 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {clearErrors, addGroup, getGroups, getUsers} from '../../store/actions/authActions';
+import {clearErrors, addGroup} from '../../store/actions/authActions';
 import {setAlert} from '../../store/actions/alertActions';
 import Dropdown from '../layout/Dropdown';
 
 
-const AddGroup = ({auth:{error, groups}, addGroup, clearErrors, setAlert, getGroups, getUsers}) => {
+const AddGroup = ({auth:{error}, addGroup, clearErrors, setAlert}) => {
 
   useEffect(() => {
     if (error === 'Group already exists') {
       setAlert(error, 'danger');
       clearErrors();
     }
-    getGroups();
-    getUsers();
     // eslint-disable-next-line
-  }, [error, history, getGroups, getUsers]
+  }, [error, history]
   );
 
     const [group, setGroup] = useState({
@@ -32,30 +30,25 @@ const AddGroup = ({auth:{error, groups}, addGroup, clearErrors, setAlert, getGro
             setAlert('Please enter a group name', 'danger');
           } else {
             addGroup({
-                name,
+                name
             });
           }
+          setGroup({
+            name:''
+          })
     }
 
     return (
-        <div className="form-container">
+        <div className="registerForm">
         <h1>
-            Account <span className="text-primary">Add Group</span>
+          <span className="text-primary">Add Group</span>
         </h1>
         <form>
             <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input type="text" name="name" value={name} onChange={onChange} />
             </div>
-            <div className="form-group">
-              <label>Group:</label>
-              <Dropdown title={'Group'} options={groups} />
-            </div>
-            <div className="form-group">
-              <label>Members:</label>
-              <Dropdown title={'members'} options={users} />
-            </div>
-            <input type="submit" value="addGroup" className="btn btn-primary btn-block" onClick={onSubmit} />
+            <input type="submit" value="Add Group" className="btn btn-primary btn-block" onClick={onSubmit} />
         </form>
             
         </div>
@@ -66,4 +59,4 @@ const mapStateToProps = (state) => ({
     alert: state.alertReducer
 })
 
-export default connect(mapStateToProps, {addGroup, clearErrors, setAlert, getGroups, getUsers})(AddGroup);
+export default connect(mapStateToProps, {addGroup, clearErrors, setAlert})(AddGroup);

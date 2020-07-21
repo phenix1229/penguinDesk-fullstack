@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import Sidebar from '../layout/Sidebar';
 import Register from '../auth/Register';
+import AddGroup from '../auth/AddGroup';
 
 import {loadUser} from '../../store/actions/authActions';
 
@@ -23,6 +24,7 @@ function Home({auth:{isAuthenticated, view}, props:{history}, loadUser}) {
                 </div>
                 <div id="main">
                     {view === 'register' && <Register />}
+                    {view === 'newGroup' && <AddGroup />}
                 </div>
             </>
         )

@@ -55,7 +55,7 @@ body {
   color: #333;
 }
 
-#registerForm {
+.registerForm {
   margin-top: 50px;
   width: 500px;
 }
