@@ -18,12 +18,25 @@ const TicketList = ({auth:{user, view}, ticketState:{tickets}, getTickets}) => {
         tickets.filter(ticket => ticket.assignedGroup === user.group) :
         tickets.filter(ticket => ticket.assignedTech === user.email);
 
+    const title = view === 'groupTickets' ? 'Open Tickets (Group)' : 'Open Tickets (Assigned)'
+
     return (
-        <div className="library">
-                {ticketList.map(ticket => 
-                    <TicketListItem key={ticketList.indexOf(ticket)} ticket={ticket} />)
-        }
-        </div>
+            <div className='ticketList'>
+            <h1>
+                <span className="text-primary">{title}</span>
+            </h1>
+            <table>
+                <tr>
+                    <th>Open Date</th>
+                    <th>Client</th>
+                    <th>Issue</th>
+                    <th>Assigned Tech</th>
+                </tr>
+                    {ticketList.map(ticket => 
+                        <TicketListItem key={ticketList.indexOf(ticket)} ticket={ticket} />)
+                    }
+            </table>
+            </div>
     )
 };
 

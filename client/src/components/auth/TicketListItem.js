@@ -7,16 +7,12 @@ const TicketListItem = ({props:{ticket}}) => {
     const desc = `${issue.slice(0, 30)}...`;
 
     return (
-        <div className="card bg-light">
-            <h3 className="text primary text-left">
-                {client}
-            </h3>
-            <ul className="list">
-                <li>{openDate}</li>
-                <li>{desc}</li>
-                <li>{assignedTech}</li>
-            </ul>
-        </div>
+        <tr>
+            <td style={{width:"100px"}}>{openDate}</td>
+            <td style={{width:"175px"}}>{client}</td>
+            <td>{issue}</td>
+            <td style={{width:"175px"}}>{assignedTech}</td>
+        </tr>
     )
 };
 

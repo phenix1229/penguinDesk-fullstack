@@ -28,7 +28,7 @@ function Home({auth:{isAuthenticated, view}, props:{history}, loadUser}) {
                     {view === 'register' && <Register />}
                     {view === 'newGroup' && <AddGroup />}
                     {view === 'newTicket' && <NewTicket />}
-                    {view === 'groupTickets' && <TicketList />}
+                    {(view === 'groupTickets' || view === 'assignedTickets') && <TicketList />}
                 </div>
             </>
         )
