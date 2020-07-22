@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import TicketListItem from './TicketListItem';
+import TicketModal from './TicketModal';
 import {getTickets} from '../../store/actions/ticketActions';
 
 
@@ -26,16 +27,21 @@ const TicketList = ({auth:{user, view}, ticketState:{tickets}, getTickets}) => {
                 <span className="text-primary">{title}</span>
             </h1>
             <table>
-                <tr>
-                    <th>Open Date</th>
-                    <th>Client</th>
-                    <th>Issue</th>
-                    <th>Assigned Tech</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Open Date</th>
+                        <th>Client</th>
+                        <th>Issue</th>
+                        <th>Assigned Tech</th>
+                    </tr>
+                </thead>
+                <tbody>
                     {ticketList.map(ticket => 
                         <TicketListItem key={ticketList.indexOf(ticket)} ticket={ticket} />)
                     }
+                </tbody>
             </table>
+            <TicketModal />
             </div>
     )
 };

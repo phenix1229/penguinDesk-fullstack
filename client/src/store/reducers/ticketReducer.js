@@ -3,6 +3,7 @@ import {
     LOAD_OPEN_TICKETS,
     LOAD_CLOSED_TICKETS,
     LOAD_TICKET,
+    CLEAR_TICKET,
     CLOSE_TICKET,
     UPDATE_TICKET
 } from '../actions/types';
@@ -20,8 +21,18 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 tickets: action.payload
-            }
+            };
+        case LOAD_TICKET:
+            return {
+                ...state,
+                ticket: action.payload
+            };
+        case CLEAR_TICKET:
+            return {
+                ...state,
+                ticket: null
+            };
         default:
       return state;
-  }
+    }
 };

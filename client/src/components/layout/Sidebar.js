@@ -8,12 +8,8 @@ import Search from './Search';
 const Sidebar = ({auth:{isAdmin}, setView}) => {
     const adminButtons = (
         <>
-            <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} onClick={() => setView('register')}>
-                        <h3>New User</h3>
-            </button>
-            <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} onClick={() => setView('newGroup')}>
-                        <h3>New Group</h3>
-            </button>
+        <input type="submit" value="New User" className="btn btn-primary btn-block" onClick={() => setView('register')} />
+        <input type="submit" value="New Group" className="btn btn-primary btn-block" onClick={() => setView('newGroup')} />
         </>
     )
 
@@ -23,18 +19,9 @@ const Sidebar = ({auth:{isAdmin}, setView}) => {
                 <Search />
                 <br /> 
                 {isAdmin && adminButtons}
-                <button onClick={() => setView('newTicket')} className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >
-                    <h3>New Ticket</h3>
-                </button>
-                <button onClick={() => setView('groupTickets')} className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >
-                    <h3>Open Tickets</h3>
-                </button>
-                <button onClick={() => setView('assignedTickets')} className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)', marginBottom:'10px'}} >
-                    <h3>Assigned Tickets</h3>
-                </button>
-                <button className="ui primary button" style={{ backgroundColor:'#F2F2F2', color:'rgb(107, 105, 105)'}} >
-                    <h3>Logout</h3>
-                </button>
+                <input type="submit" value="New Ticket" className="btn btn-primary btn-block" onClick={() => setView('newTicket')} />
+                <input type="submit" value="Open Tickets" className="btn btn-primary btn-block" onClick={() => setView('groupTickets')} />
+                <input type="submit" value="Assigned Tickets" className="btn btn-primary btn-block" onClick={() => setView('assignedTickets')} />
             </>
         )
 }

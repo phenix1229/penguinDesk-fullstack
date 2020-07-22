@@ -1,13 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {loadTicket} from '../../store/actions/ticketActions';
 
 
-const TicketListItem = ({props:{ticket}}) => {
+const TicketListItem = ({props:{ticket}, loadTicket}) => {
     const {client, issue, openDate, assignedTech} = ticket;
     const desc = `${issue.slice(0, 30)}...`;
+    // const log = () => console.log(ticket)
 
     return (
-        <tr>
+        <tr onClick={() => loadTicket(ticket)}>
             <td style={{width:"100px"}}>{openDate}</td>
             <td style={{width:"175px"}}>{client}</td>
             <td>{issue}</td>
@@ -17,8 +19,8 @@ const TicketListItem = ({props:{ticket}}) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    auth: state.authReducer,
+    ticketState: state.ticketReducer,
     props: ownProps
 });
 
-export default connect(mapStateToProps)(TicketListItem);
+export default connect(mapStateToProps, {loadTicket})(TicketListItem);

@@ -4,6 +4,7 @@ import {
     LOAD_OPEN_TICKETS,
     LOAD_CLOSED_TICKETS,
     LOAD_TICKET,
+    CLEAR_TICKET,
     CLOSE_TICKET,
     UPDATE_TICKET
 
@@ -65,13 +66,21 @@ export const loadClosedTickets = () => async dispatch => {
     }
 };
 
-export const loadTicket = (id) => async dispatch => {
+export const loadTicket = (ticket) => async dispatch => {
     try {
-        const res = await axios.get(`/ticket/${id}`);
-
         dispatch ({
             type: LOAD_TICKET,
-            payload: res.data
+            payload: ticket
+        })
+    } catch (error) {
+        
+    }
+};
+
+export const clearTicket = () => async dispatch => {
+    try {
+        dispatch ({
+            type: CLEAR_TICKET
         })
     } catch (error) {
         
