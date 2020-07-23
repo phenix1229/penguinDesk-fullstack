@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from './auth/Login';
 import Navbar from './layout/Navbar';
-import Footer from './layout/Footer';
 import Alerts from './layout/Alerts';
 import setAuthToken from '../utils/setAuthToken';
 import store from '../store';

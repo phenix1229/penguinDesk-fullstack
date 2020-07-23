@@ -4,15 +4,16 @@ import {loadTicket} from '../../store/actions/ticketActions';
 
 
 const TicketListItem = ({props:{ticket}, loadTicket}) => {
-    const {client, issue, openDate, assignedTech} = ticket;
+    const {ticketNumber, client, issue, openDate, assignedTech} = ticket;
     const desc = `${issue.slice(0, 30)}...`;
     // const log = () => console.log(ticket)
 
     return (
         <tr onClick={() => loadTicket(ticket)}>
+            <td style={{width:"100px"}}>{ticketNumber}</td>
             <td style={{width:"100px"}}>{openDate}</td>
             <td style={{width:"175px"}}>{client}</td>
-            <td>{issue}</td>
+            <td>{desc}</td>
             <td style={{width:"175px"}}>{assignedTech}</td>
         </tr>
     )

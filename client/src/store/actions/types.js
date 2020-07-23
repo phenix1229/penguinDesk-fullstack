@@ -30,3 +30,4 @@ export const GET_GROUPS = 'GET_GROUPS';
 export const GET_USERS = 'GET_USERS';
 export const SET_VIEW = "SET_VIEW";
 export const CLEAR_TICKET = "CLEAR_TICKET";
+export const EDIT_TICKET = "EDIT_TICKET";

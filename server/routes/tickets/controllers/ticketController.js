@@ -1,18 +1,23 @@
 const Ticket = require('../../../models/Ticket');
+const utils = require('../utils/ticketUtils');
 
 module.exports = {
     createTicket:(req, res) => {
+        const {openedBy, client, issue, comments, resolution, status, closedBy, closeDate, assignedGroup, assignedTech} = req.body;
+        const ticketNumber = utils.findUnique();
+
         const newTicket = new Ticket();
-        newTicket.openedBy = req.body.openedBy;
-        newTicket.client = req.body.client;
-        newTicket.issue = req.body.issue;
-        // newTicket.comments = req.body.comments;
-        // newTicket.resolution = req.body.resolution;
-        newTicket.status = req.body.status;
-        // newTicket.closedBy = req.body.closedBy;
-        // newTicket.closeDate = req.body.closeDate;
-        newTicket.assignedTech = req.body.assignedTech;
-        newTicket.assignedGroup = req.body.assignedGroup;
+        newTicket.ticketNumber = ticketNumber;
+        newTicket.openedBy = openedBy;
+        newTicket.client = client;
+        newTicket.issue = issue;
+        newTicket.comments = comments;
+        newTicket.resolution = resolution;
+        newTicket.status = status;
+        newTicket.closedBy = closedBy;
+        newTicket.closeDate = closeDate;
+        newTicket.assignedTech = assignedTech;
+        newTicket.assignedGroup = assignedGroup;
         newTicket.save().then((ticket) => {
             return res.json(ticket);
         });
@@ -34,7 +39,11 @@ module.exports = {
 
     updateTicket:(req, res) => {
         Ticket.findById({ _id: req.params.id }).then((ticket) => {
-            ticket.open = req.body.open ? req.body.open : ticket.open;
+            ticket.status = req.body.status ? req.body.status : ticket.status;
+            ticket.client = req.body.client ? req.body.client : ticket.client;
+            ticket.clientLocation = req.body.clientLocation ? req.body.clientLocation : ticket.clientLocation;
+            ticket.assignedGroup = req.body.assignedGroup ? req.body.assignedGroup : ticket.assignedGroup;
+            ticket.assignedTech = req.body.assignedTech ? req.body.assignedTech : ticket.assignedTech;
             ticket.resolution = req.body.resolution ? req.body.resolution : ticket.resolution;
             ticket.comments = req.body.comments ? req.body.comments : ticket.comments;
             ticket.closedBy = req.body.closedBy ? req.body.closedBy : ticket.closedBy;

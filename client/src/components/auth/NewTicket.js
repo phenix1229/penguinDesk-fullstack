@@ -37,7 +37,7 @@ const NewTicket = ({auth:{error, groups, users, user}, clearErrors, setAlert, ge
             setAlert('Please enter Client, Issue, and Assigned Group', 'danger');
           } else {
             newTicket({
-                openedBy,
+                openedBy:user.email,
                 client,
                 issue,
                 assignedTech,
@@ -45,7 +45,6 @@ const NewTicket = ({auth:{error, groups, users, user}, clearErrors, setAlert, ge
             });
           }
           setTicket({
-            openedBy:user.email,
             client:'',
             issue:'',
             // assignedTech:'',

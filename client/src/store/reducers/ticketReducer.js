@@ -5,13 +5,15 @@ import {
     LOAD_TICKET,
     CLEAR_TICKET,
     CLOSE_TICKET,
-    UPDATE_TICKET
+    UPDATE_TICKET,
+    EDIT_TICKET
 } from '../actions/types';
 
 const initialState = {
     closedTickets: null,
     tickets: null,
     ticket: null,
+    edit: null,
     ticketCounts: null
 }
 
@@ -30,7 +32,20 @@ export default (state = initialState, action) => {
         case CLEAR_TICKET:
             return {
                 ...state,
-                ticket: null
+                ticket: null,
+                edit: null
+            };
+        case EDIT_TICKET:
+            return {
+                ...state,
+                ticket: action.payload,
+                edit: true
+            };
+        case UPDATE_TICKET:
+            return {
+                ...state,
+                edit: null,
+                // ticket: null
             };
         default:
       return state;

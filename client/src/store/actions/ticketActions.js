@@ -6,7 +6,8 @@ import {
     LOAD_TICKET,
     CLEAR_TICKET,
     CLOSE_TICKET,
-    UPDATE_TICKET
+    UPDATE_TICKET,
+    EDIT_TICKET
 
 } from './types';
 
@@ -104,7 +105,7 @@ export const newTicket = (ticket) => async dispatch => {
     
 };
 
-export const updateTicket = (ticket, id) => async dispatch => {
+export const updateTicket = (ticket) => async dispatch => {
 
     console.log(ticket)
 
@@ -114,8 +115,24 @@ export const updateTicket = (ticket, id) => async dispatch => {
             'Access-Control-Allow-Origin':'*'
         }
     };
-    axios.put(`/ticket/${id}`, ticket, axiosConfig)
+    axios.put(`api/tickets/${ticket._id}`, ticket, axiosConfig);
+
+    dispatch ({
+        type: UPDATE_TICKET
+    })
 };
+
+export const editTicket = (ticket) => async dispatch => {
+    try {
+        dispatch ({
+            type: EDIT_TICKET,
+            payload: ticket
+        })
+    } catch (error) {
+        
+    }
+    
+}
 
 export const closeTicket = (ticket, id) => async dispatch => {
 

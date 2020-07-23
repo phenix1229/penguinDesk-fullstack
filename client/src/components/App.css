@@ -66,6 +66,26 @@ body {
   justify-self: center;
 }
 
+.ticketModalForm {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.tmfColumnLeft {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  align-items: center;
+}
+
+.tmfColumnRight {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  align-items: center;
+}
+
 a {
   color: var(--primary-color);
   text-decoration: none;

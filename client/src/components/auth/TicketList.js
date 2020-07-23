@@ -29,6 +29,7 @@ const TicketList = ({auth:{user, view}, ticketState:{tickets}, getTickets}) => {
             <table>
                 <thead>
                     <tr>
+                        <th>Ticket Number</th>
                         <th>Open Date</th>
                         <th>Client</th>
                         <th>Issue</th>
