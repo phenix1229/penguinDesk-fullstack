@@ -1,15 +1,48 @@
 import React, {useEffect, useState} from 'react';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 import Modal from 'react-modal';
+import {loadTicket, updateTicket, getTickets} from '../../store/actions/ticketActions';
 
 const today = () =>{
     return `${new Date().getMonth()+1}/${new Date().getDate()}/${new Date().getFullYear()} (${new Date().getHours()}:${new Date().getMinutes()})`;
 };
 
 
-const CommentModal = ({setTick, setComment, comments, newC}) => {
+const CommentModal = ({ticketState:{ticket}, setComment, newC, loadTicket, updateTicket, getTickets}) => {
+    useEffect(() => {
+        if (ticket !== null) {
+          setTick(ticket);
+        } else {
+            setTick({
+              ticketNumber:'',
+              openedBy:'',
+              openDate:'',
+              client:'',
+              clientLocation:'',
+              issue:'',
+              status:'',
+              assignedGroup:'',
+              assignedTech:'',
+              comments:[],
+              resolution:''
+            });
+          }
+    }, [ticket]);
+
+    const [tick, setTick] = useState({
+        comments:[],
+    });
+
+    const {
+        comments,
+      } = tick;
+
+
     const onAdd = () => {
-        setTick({comments: [...comments, (`${today()} - ${document.getElementById('newComment').value.trim()}`)]});
+        setTick({comments: [...ticket.comments, (`${today()} - ${document.getElementById('newComment').value.trim()}`)]});
+        updateTicket(tick);
+        getTickets();
+        loadTicket(ticket);
         setComment({newC:false})
     }
 
@@ -49,7 +82,7 @@ const CommentModal = ({setTick, setComment, comments, newC}) => {
                 </div>
                 <div>
                     <button onClick={onCancel}>
-                        Cancle/Exit
+                        Cancel/Exit
                     </button>
                 </div>
             </div>
@@ -57,4 +90,10 @@ const CommentModal = ({setTick, setComment, comments, newC}) => {
     )
 }
 
-export default CommentModal;
+const mapStateToProps = (state) => ({
+    ticketState: state.ticketReducer,
+    auth: state.authReducer
+    // alert: state.alertReducer
+})
+
+export default connect(mapStateToProps, {loadTicket, updateTicket, getTickets})(CommentModal);

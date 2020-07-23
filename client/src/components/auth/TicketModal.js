@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import Dropdown from '../layout/Dropdown';
-import CommentModal from './CommentModal';
-import ResolutionModal from './ResolutionModal';
 import { clearTicket, updateTicket, editTicket, loadTicket, getTickets } from '../../store/actions/ticketActions';
 import { getGroups, getUsers } from '../../store/actions/authActions';
 import {loadUser} from '../../store/actions/authActions';
+
+const today = () =>{
+    return `${new Date().getMonth()+1}/${new Date().getDate()}/${new Date().getFullYear()} (${new Date().getHours()}:${new Date().getMinutes()})`;
+  };
 
 const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTicket, updateTicket, editTicket, getGroups, getUsers, getTickets}) => {
     useEffect(() => {
@@ -44,12 +46,6 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
             comments:[],
             resolution:''
       });
-
-      const [newComment, setNewComment] = useState ({
-          newC:false
-      })
-
-      const {newC} = newComment;
     
       const {
         ticketNumber,
@@ -64,21 +60,34 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
         comments,
         resolution
       } = tick;
+
+    const [newComment, setNewComment] = useState ({
+        newC:false
+    })
+
+    const {newC} = newComment;
+
+    const [tempComment, setTempComment] = useState ({
+        dateString:today(),
+        commentString: ''
+    })
+
+    const {dateString, commentString} = tempComment;
     
       const onChange = e =>
         setTick({ ...tick, [e.target.name]: e.target.value });
+      
+        const onChangeTemp = e =>
+        setTempComment({ ...tempComment, [e.target.name]: e.target.value });
     
       const onSubmit = e => {
         e.preventDefault();
-        if ( edit !== null) {
+            if(commentString){
+                comments.push(`${dateString} - ${commentString}`)
+            }
             updateTicket(tick);
             clearTicket();
-            getTickets();
-        } else {
-        //   updateContact(contact);
         }
-      };
-    
 
     return(
     <Modal
@@ -92,7 +101,7 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
         {ticketNumber}
     </h2>
   </div>
-  <br />
+
   <hr />
   <br />
   <div>
@@ -157,13 +166,21 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
   </div>
   <div style={{width:"150px"}}>
         <label>Status:</label>
-        <input
-            placeholder={status}
-            name='status'
-            readOnly={status}
-        />
+        {edit && 
+            <select name='status' id='status' onChange={onChange}>
+                <option value='Open'>Open</option>
+                <option value='Closed'>Closed</option>
+            </select>
+        }
+        {edit === null &&
+            <input
+                placeholder={status}
+                name='status'
+                readOnly={status}
+            />
+        }
   </div>
-  <br />
+ 
   <hr />
   <br />
   <div>
@@ -174,7 +191,7 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
             readOnly={issue}
         />
   </div>
-  <div>
+  
     <div className="grid-2">
         <div className='tmfColumnLeft'>
             <label>Assigned Group:</label>
@@ -203,26 +220,42 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
             }
         </div>
     </div>
-    <br />
+  
     <hr />
     <br />
     <div>
         <label>Comments:</label>
-        <input style={{width:"100%"}}
-            placeholder={comments}
-            name='comments'
-            readOnly={comments}
-        />
+        <div className="commentDiv">
+            {(comments !== undefined && comments !== null && comments !== '' && comments.length > 0) &&
+                comments.map(item => 
+                <>
+                <hr />
+                <p>{item}</p>
+                </>
+                )}
+        </div>
+        <br />
         { edit && <button onClick={() => {setNewComment({newC:true})}}>Add Comment</button>}
+        {newC && <input type='text' name='commentString' placeholder='Enter New Comment...' onChange={onChangeTemp} />}
     </div>
-    <br />
+ 
     <hr />
     <br />
-    </div>
+   
+    {edit &&
+        <>
+        <div>
+            <label>Resolution:</label>
+            <input type='text' name='resolution' placeholder='Enter Resolution...' onChange={onChange} />
+        </div>
+        <hr />
+        <br />
+        </>
+    }
     <div>
-        {edit && <input type="submit" onClick={onSubmit} value="Save Changes"/>}
+        {edit && <button onClick={onSubmit}>Save Changes</button>}
     </div>
-    
+   
     <div className="grid-2">
         <div>
             {edit === null &&
@@ -233,7 +266,6 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
             <button onClick={() => {clearTicket(); getTickets()}}>Cancel/Exit</button>
         </div>
     </div>
-    <CommentModal setComment={setNewComment} newC={newC} setTick={setTick} comments={comments} />
   </Modal>
 );}
 

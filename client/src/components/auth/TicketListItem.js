@@ -6,7 +6,6 @@ import {loadTicket} from '../../store/actions/ticketActions';
 const TicketListItem = ({props:{ticket}, loadTicket}) => {
     const {ticketNumber, client, issue, openDate, assignedTech} = ticket;
     const desc = `${issue.slice(0, 30)}...`;
-    // const log = () => console.log(ticket)
 
     return (
         <tr onClick={() => loadTicket(ticket)}>

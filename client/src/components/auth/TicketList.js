@@ -5,11 +5,11 @@ import TicketModal from './TicketModal';
 import {getTickets} from '../../store/actions/ticketActions';
 
 
-const TicketList = ({auth:{user, view}, ticketState:{tickets}, getTickets}) => {
+const TicketList = ({auth:{user, view}, ticketState:{tickets, ticket}, getTickets}) => {
     useEffect(() => {
         getTickets()
         // eslint-disable-next-line
-    }, [view]);
+    }, [view, ticket]);
 
     if(tickets === null || tickets.length === 0){
         return <h4>No Tickets</h4>
