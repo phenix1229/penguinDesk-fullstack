@@ -74,18 +74,19 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
 
     const {dateString, commentString} = tempComment;
     
-      const onChange = e =>
+    const onChange = e =>
         setTick({ ...tick, [e.target.name]: e.target.value });
-      
-        const onChangeTemp = e =>
+    
+    const onChangeTemp = e =>
         setTempComment({ ...tempComment, [e.target.name]: e.target.value });
     
-      const onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault();
             if(commentString){
                 comments.push(`${dateString} - ${commentString}`)
             }
             updateTicket(tick);
+            setNewComment({newC:false});
             clearTicket();
         }
 
@@ -98,7 +99,7 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
   
   <div className='ticketModalForm'>
     <h2 className='text-primary'>
-        {ticketNumber}
+        Ticket:{' '}{ticketNumber}
     </h2>
   </div>
 
@@ -263,7 +264,7 @@ const TicketModal = ({ticketState:{ticket, edit}, auth:{groups, users}, clearTic
             }
         </div>
         <div>
-            <button onClick={() => {clearTicket(); getTickets()}}>Cancel/Exit</button>
+            <button onClick={() => {clearTicket(); getTickets(); setNewComment({newC:false})}}>Cancel/Exit</button>
         </div>
     </div>
   </Modal>
